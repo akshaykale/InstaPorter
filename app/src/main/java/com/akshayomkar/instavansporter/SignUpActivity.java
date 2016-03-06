@@ -241,7 +241,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         Calendar c= Calendar.getInstance();
         Long t2=c.getTimeInMillis();
-        Long t3=120000L;// time after which the alarm gets called
+        Long t3=20000L;// time after which the alarm gets called
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intentAlarm = new Intent(this, AlarmReciever.class);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,t2,t3, PendingIntent.getBroadcast(this, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));

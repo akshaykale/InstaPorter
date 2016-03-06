@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                     job.setStr_dest(jsonObject.getString("DEST_ADDR"));
                     job.setStr_src(jsonObject.getString("SRC_ADDR"));
                     job.setSrc_time(jsonObject.getString("SRC_TIME"));
+                    job.setJob_id(jsonObject.getString("JOB_ID"));
                     //job.setPorterslist(jsonObject.getString("PORTER_LIST"));
                     sJobListCompleted.add(job);
                 } catch (JSONException e) {
@@ -172,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     job.setStr_dest(jsonObject.getString("DEST_ADDR"));
                     job.setStr_src(jsonObject.getString("SRC_ADDR"));
                     job.setSrc_time(jsonObject.getString("SRC_TIME"));
+                    job.setJob_id(jsonObject.getString("JOB_ID"));
                     //job.setPorterslist(jsonObject.getString("PORTER_LIST"));
                     sJobListAvailable.add(job);
                 } catch (JSONException e) {

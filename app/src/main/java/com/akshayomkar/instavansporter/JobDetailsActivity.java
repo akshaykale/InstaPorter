@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -113,6 +114,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                             Toast.makeText(getApplicationContext(),"Job accepted! You gained 10 credits",Toast.LENGTH_SHORT).show();
                             DataAccessStaticHelper.getInstance().addCredit(10);
                         }
+                        hideProgressDialog();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -162,9 +164,43 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                     public void onResponse(String response) {
                         Log.d(TAG, response);
                         if (response.toLowerCase().contains("success")){
-                            Toast.makeText(getApplicationContext(),"Congrats! You gained 50 credits",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Congrats! You gained 50 credits", Toast.LENGTH_SHORT).show();
                             DataAccessStaticHelper.getInstance().addCredit(50);
+
+                            /*
+                            * job.setAmount(jsonObject.getString("AMOUNT"));
+                    job.setDest_lat(jsonObject.getString("DEST_LAT"));
+                    job.setDest_lng(jsonObject.getString("DEST_LNG"));
+                    job.setNum_porter(jsonObject.getString("NUM_PORTER"));
+                    job.setSrc_lat(jsonObject.getString("SRC_LAT"));
+                    job.setSrc_lng(jsonObject.getString("SRC_LNG"));
+                    job.setStatus(jsonObject.getString("STATUS"));
+                    job.setStr_dest(jsonObject.getString("DEST_ADDR"));
+                    job.setStr_src(jsonObject.getString("SRC_ADDR"));
+                    job.setSrc_time(jsonObject.getString("SRC_TIME"));
+                    job.setJob_id(jsonObject.getString("JOB_ID"));
+                            * */
+
+                            JSONObject jsonObject = new JSONObject();
+                            try {
+                                jsonObject.put("AMOUNT",mJob.getAmount());
+                                jsonObject.put("DEST_LAT",mJob.getDest_lat());
+                                jsonObject.put("DEST_LNG",mJob.getDest_lng());
+                                jsonObject.put("NUM_PORTER",mJob.getNum_porter());
+                                jsonObject.put("SRC_LAT",mJob.getSrc_lat());jsonObject.put("STATUS",mJob.getStatus());
+                                jsonObject.put("SRC_LNG",mJob.getSrc_lng());
+                                jsonObject.put("DEST_ADDR",mJob.getStr_dest());
+                                jsonObject.put("SRC_ADDR",mJob.getStr_src());
+                                jsonObject.put("SRC_TIME",mJob.getSrc_time());jsonObject.put("JOB_ID",mJob.getJob_id());
+
+                                DataAccessStaticHelper.getInstance().appendJobCompleted(jsonObject.toString());
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                         }
+                        hideProgressDialog();
                     }
                 }, new Response.ErrorListener() {
             @Override

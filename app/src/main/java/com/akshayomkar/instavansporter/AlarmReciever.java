@@ -39,7 +39,7 @@ public class AlarmReciever extends BroadcastReceiver implements LocationListener
     SharedPreferences prefs;
     private static double lat, longi;
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1;
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 120 * 1;
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 12 * 1;
     protected LocationManager locationManager;
     boolean gps_enabled,network_enabled;
     Location Loca;

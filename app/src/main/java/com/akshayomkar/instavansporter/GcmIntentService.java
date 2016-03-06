@@ -64,8 +64,8 @@ public class GcmIntentService extends IntentService {
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(this)
                                 .setSmallIcon(R.drawable.logo)
-                                .setContentTitle("My notification")
-                                .setContentText("Hello World!");
+                                .setContentTitle("InstaVans Porter")
+                                .setContentText("Job Request");
                 // Creates an explicit intent for an Activity in your app
                 Intent resultIntent = new Intent(this, SplashScreenActivity.class);
                 TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
