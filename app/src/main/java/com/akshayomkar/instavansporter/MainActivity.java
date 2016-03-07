@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -72,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
         checkInternetConnectionAndMakeNetworkRequest();
     }
 
+    private void initNavDrawer() {
+        DrawerFragment navDrawer = (DrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_nav_drawer);
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navDrawer.setUpDrawer(drawerLayout, toolbar);
+    }
+
     private void init() {
         sJobListAvailable = new ArrayList<>();
         sJobListCompleted = new ArrayList<>();
@@ -85,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
         initSlidingTabs();
+        initNavDrawer();
     }
 
     private void initSlidingTabs() {
@@ -159,25 +169,26 @@ public class MainActivity extends AppCompatActivity {
         if (!rawData.equals("")) {
             String[] dataArr = rawData.split("#");
             for (int i = 0; i < dataArr.length; i++) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(dataArr[i]);
-                    Job job = new Job();
-                    job.setAmount(jsonObject.getString("AMOUNT"));
-                    job.setDest_lat(jsonObject.getString("DEST_LAT"));
-                    job.setDest_lng(jsonObject.getString("DEST_LNG"));
-                    job.setNum_porter(jsonObject.getString("NUM_PORTER"));
-                    job.setSrc_lat(jsonObject.getString("SRC_LAT"));
-                    job.setSrc_lng(jsonObject.getString("SRC_LNG"));
-                    job.setStatus(jsonObject.getString("STATUS"));
-                    job.setStr_dest(jsonObject.getString("DEST_ADDR"));
-                    job.setStr_src(jsonObject.getString("SRC_ADDR"));
-                    job.setSrc_time(jsonObject.getString("SRC_TIME"));
-                    job.setJob_id(jsonObject.getString("JOB_ID"));
-                    //job.setPorterslist(jsonObject.getString("PORTER_LIST"));
-                    sJobListAvailable.add(job);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (dataArr[i].toLowerCase().contains("job_id")) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(dataArr[i]);
+                        Job job = new Job();
+                        job.setAmount(jsonObject.getString("AMOUNT"));
+                        job.setDest_lat(jsonObject.getString("DEST_LAT"));
+                        job.setDest_lng(jsonObject.getString("DEST_LNG"));
+                        job.setNum_porter(jsonObject.getString("NUM_PORTER"));
+                        job.setSrc_lat(jsonObject.getString("SRC_LAT"));
+                        job.setSrc_lng(jsonObject.getString("SRC_LNG"));
+                        job.setStatus(jsonObject.getString("STATUS"));
+                        job.setStr_dest(jsonObject.getString("DEST_ADDR"));
+                        job.setStr_src(jsonObject.getString("SRC_ADDR"));
+                        job.setSrc_time(jsonObject.getString("SRC_TIME"));
+                        job.setJob_id(jsonObject.getString("JOB_ID"));
+                        //job.setPorterslist(jsonObject.getString("PORTER_LIST"));
+                        sJobListAvailable.add(job);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
